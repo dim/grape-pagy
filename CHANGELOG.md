@@ -1,3 +1,7 @@
+### 0.9.0
+
+- Pin to Pagy 9.x.
+
 ### 0.5.0
 
 - Pin to Pagy 5.x.

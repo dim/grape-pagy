@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = 'grape-pagy'
-  spec.version       = '0.6.0'
+  spec.version       = '0.9.0'
   spec.authors       = ['Black Square Media']
   spec.email         = ['info@blacksquaremedia.com']
   spec.description   = 'Pagy paginator for grape API'
@@ -12,8 +12,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.required_ruby_version = '>= 3.0'
 
-  spec.add_runtime_dependency 'grape', '>= 1.5'
-  spec.add_runtime_dependency 'pagy', '>= 6.0'
+  spec.add_runtime_dependency 'grape', '>= 2.0'
+  spec.add_runtime_dependency 'pagy', '>= 9.0'
 
   spec.metadata['rubygems_mfa_required'] = 'true'
 end

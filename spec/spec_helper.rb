@@ -4,8 +4,8 @@ require 'rspec'
 require 'grape/pagy'
 require 'rack/test'
 
-Pagy::DEFAULT[:items] = 10
-Pagy::DEFAULT[:max_items] = 20
+Pagy::DEFAULT[:limit] = 10
+Pagy::DEFAULT[:limit_max] = 20
 
 class TestArray < Array
   def limit(num)
@@ -21,7 +21,7 @@ class TestAPI < Grape::API
   helpers Grape::Pagy::Helpers
 
   params do
-    use :pagy, items: 5, max_items: 6
+    use :pagy, limit: 5, limit_max: 6
   end
   get '' do
     pagy (1..12).to_a
@@ -35,7 +35,7 @@ class TestAPI < Grape::API
   end
 
   params do
-    use :pagy, items: 3
+    use :pagy, limit: 3
   end
   get '/countless' do
     pagy TestArray.new((1..12).to_a), using: :countless
@@ -43,7 +43,7 @@ class TestAPI < Grape::API
 
   resource :sub do
     params do
-      use :pagy, items_param: :per_page
+      use :pagy, limit_param: :per_page
     end
     get '/' do
       pagy (1..12).to_a, count: 13
