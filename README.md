@@ -49,7 +49,7 @@ class MyApi < Grape::API
     params do
       # Override defaults by setting Pagy::DEFAULT or by passing options.
       use :pagy,
-          limit_param: :per_page, # Accept per_page=N param to limit limit.
+          limit_param: :per_page, # Accept per_page=N param to limit items.
           limit: 2,               # If per_page param is blank, default to 2.
           limit_max: 10           # Restrict per_page to maximum 10.
     end
