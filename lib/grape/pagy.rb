@@ -4,7 +4,7 @@ require 'pagy/extras/arel'
 require 'pagy/extras/array'
 require 'pagy/extras/countless'
 require 'pagy/extras/headers'
-require 'pagy/extras/items'
+require 'pagy/extras/limit'
 require 'pagy/extras/overflow'
 
 module Grape
@@ -13,7 +13,6 @@ module Grape
       include ::Pagy::Backend
 
       def paginate(collection, using: nil, **opts, &block)
-        opts = pagy_countless_get_vars(nil, opts)
         using ||= if collection.respond_to?(:arel_table)
                     :arel
                   elsif collection.is_a?(Array)
@@ -32,15 +31,15 @@ module Grape
       extend Grape::API::Helpers
 
       params :pagy do |**opts|
-        items = opts.delete(:items) || ::Pagy::DEFAULT[:items]
+        limit = opts.delete(:limit) || ::Pagy::DEFAULT[:limit]
         page = opts.delete(:page) || ::Pagy::DEFAULT[:page]
         page_param = opts[:page_param] || ::Pagy::DEFAULT[:page_param]
-        items_param = opts[:items_param] || ::Pagy::DEFAULT[:items_param]
-        max_items = opts[:max_items] || ::Pagy::DEFAULT[:max_items]
+        limit_param = opts[:limit_param] || ::Pagy::DEFAULT[:limit_param]
+        limit_max = opts[:limit_max] || ::Pagy::DEFAULT[:limit_max]
 
         @api.route_setting(:pagy_options, opts)
         optional page_param, type: Integer, default: page, desc: 'Page offset to fetch.'
-        optional items_param, type: Integer, default: items, desc: "Number of items to return per page. Maximum value: #{max_items}"
+        optional limit_param, type: Integer, default: limit, desc: "Number of items to return per page. Maximum value: #{limit_max}"
       end
 
       # @param [Array|ActiveRecord::Relation] collection the collection or relation.

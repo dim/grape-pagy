@@ -10,9 +10,9 @@ describe Grape::Pagy do
     expect(last_response.status).to eq(200)
     expect(last_response.headers).to include(
       'current-page' => '1',
-      'link'         => '<http://example.org/?page=1&items=5>; rel="first", ' \
-                        '<http://example.org/?page=2&items=5>; rel="next", ' \
-                        '<http://example.org/?page=3&items=5>; rel="last"',
+      'link'         => '<http://example.org/?page=1&limit=5>; rel="first", ' \
+                        '<http://example.org/?page=2&limit=5>; rel="next", ' \
+                        '<http://example.org/?page=3&limit=5>; rel="last"',
       'page-items'   => '5',
       'total-count'  => '12',
       'total-pages'  => '3',
@@ -20,8 +20,8 @@ describe Grape::Pagy do
     expect(last_response.body).to eq(%([1, 2, 3, 4, 5]))
   end
 
-  it 'accepts page and items parameters' do
-    get '/?page=2&items=3'
+  it 'accepts page and limit parameters' do
+    get '/?page=2&limit=3'
     expect(last_response.status).to eq(200)
     expect(last_response.headers).to include(
       'current-page' => '2',
@@ -32,13 +32,13 @@ describe Grape::Pagy do
     expect(last_response.body).to eq(%([4, 5, 6]))
   end
 
-  it 'caps items' do
-    get '/?items=10'
-    expect(last_response.headers).to include('Page-Items' => '6')
+  it 'caps limit' do
+    get '/?limit=10'
+    expect(last_response.headers).to include('Page-items' => '6')
     expect(last_response.body).to eq(%([1, 2, 3, 4, 5, 6]))
 
-    get '/?items=3'
-    expect(last_response.headers).to include('Page-Items' => '3')
+    get '/?limit=3'
+    expect(last_response.headers).to include('Page-items' => '3')
     expect(last_response.body).to eq(%([1, 2, 3]))
   end
 
@@ -49,7 +49,7 @@ describe Grape::Pagy do
       'current-page' => '99',
       'total-pages'  => '3',
     )
-    expect(last_response.body).to eq(%([]))
+    expect(last_response.body).to be_blank
   end
 
   it 'does not need options' do
@@ -69,9 +69,9 @@ describe Grape::Pagy do
       'current-page' => '2',
       'page-items'   => '3',
       'link'         => [
-        %(<http://example.org/countless?page=1&items=3>; rel="first"),
-        %(<http://example.org/countless?page=1&items=3>; rel="prev"),
-        %(<http://example.org/countless?page=3&items=3>; rel="next"),
+        %(<http://example.org/countless?page=1&limit=3>; rel="first"),
+        %(<http://example.org/countless?page=1&limit=3>; rel="prev"),
+        %(<http://example.org/countless?page=3&limit=3>; rel="next"),
       ].join(', '),
     )
     expect(last_response.headers).not_to include(

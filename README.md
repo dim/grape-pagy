@@ -35,7 +35,7 @@ class MyApi < Grape::API
   resource :posts do
     desc 'Return a list of posts.'
     params do
-      # This will add two optional params: :page and :items.
+      # This will add two optional params: :page and :limit.
       use :pagy
     end
     get do
@@ -49,9 +49,9 @@ class MyApi < Grape::API
     params do
       # Override defaults by setting Pagy::DEFAULT or by passing options.
       use :pagy,
-          items_param: :per_page, # Accept per_page=N param to limit items.
-          items: 2,               # If per_page param is blank, default to 2.
-          max_items: 10           # Restrict per_page to maximum 10.
+          limit_param: :per_page, # Accept per_page=N param to limit items.
+          limit: 2,               # If per_page param is blank, default to 2.
+          limit_max: 10           # Restrict per_page to maximum 10.
     end
     get do
       words = %w[this is a plain array of words]
@@ -64,7 +64,7 @@ end
 Example request:
 
 ```shell
-curl -si http://localhost:8080/api/posts?page=3&items=5
+curl -si http://localhost:8080/api/posts?page=3&limit=5
 ```
 
 The response will be paginated and also will include the following headers:
@@ -74,7 +74,7 @@ Current-Page: 3
 Page-Items: 5
 Total-Count: 22
 Total-Pages: 5
-Link: <http://localhost:8080/api/posts?page=1&items=5>; rel="first", <http://localhost:8080/api/posts?page=4&items=5>; rel="next", <http://localhost:8080/api/posts?page=2&items=5>; rel="prev", <http://localhost:8080/api/posts?page=5&items=5>; rel="last"),
+Link: <http://localhost:8080/api/posts?page=1&limit=5>; rel="first", <http://localhost:8080/api/posts?page=4&limit=5>; rel="next", <http://localhost:8080/api/posts?page=2&limit=5>; rel="prev", <http://localhost:8080/api/posts?page=5&limit=5>; rel="last"),
 ```
 
 ## Contributing

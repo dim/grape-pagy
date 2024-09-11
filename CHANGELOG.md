@@ -1,3 +1,11 @@
+### 0.9.0
+
+- Pin to Pagy 9.x.
+
+BREAKING: 
+- Rename `items` parameter to `limit` to align with latest Pagy naming convention.
+- Check other Pagy 9.x. breaking changes -> [CHANGELOG.md](https://github.com/ddnexus/pagy/blob/master/CHANGELOG.md#version-900)
+
 ### 0.5.0
 
 - Pin to Pagy 5.x.
