@@ -1,5 +1,10 @@
 require 'grape'
 require 'pagy'
+require 'pagy/extras/arel'
+require 'pagy/extras/array'
+require 'pagy/extras/countless'
+require 'pagy/extras/headers'
+require 'pagy/extras/overflow'
 
 module Grape
   module Pagy
